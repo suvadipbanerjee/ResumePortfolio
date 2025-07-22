@@ -1,0 +1,6 @@
+streamlit
+requests
+fastapi
+jinja2 
+PyPDF2 
+
