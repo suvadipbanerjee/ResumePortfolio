@@ -134,17 +134,17 @@ async def read(choices,file: UploadFile = File(...)):
     NETLIFY_TOKEN = ""  
     headers = {"Authorization": f"Bearer {NETLIFY_TOKEN}"}
     files = {"file": open(zip_path, "rb")}
-    resp = requests.post("https://api.netlify.com/api/v1/sites", headers=headers)
+    resp = requests.post("https://api.netlify.com/api/v1/sites", headers=headers)   # Netlify API URL 1
 
     if resp.status_code == 201:
         site_id = resp.json()["id"]
-        deploy_url = f"https://api.netlify.com/api/v1/sites/{site_id}/deploys"
+        deploy_url = f"https://api.netlify.com/api/v1/sites/{site_id}/deploys"      #Netlify API URL 2
 
         deploy_resp = requests.post(deploy_url, headers=headers, files=files)
 
         if deploy_resp.status_code == 200:
             deploy_data = deploy_resp.json()
-            print(deploy_data["deploy_ssl_url"])
+            print(deploy_data["deploy_ssl_url"])                                    # Our actual site hosted  URL
         else:
             print(deploy_resp.text)
     else:
@@ -153,6 +153,7 @@ async def read(choices,file: UploadFile = File(...)):
 
 
     return deploy_data["deploy_ssl_url"]
+
 
 
 
